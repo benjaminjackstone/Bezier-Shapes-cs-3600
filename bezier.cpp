@@ -6,13 +6,13 @@
 //std::vector<std::vector<double>> gLines;
 Bezier::Bezier() {
 }
-Bezier::Bezier(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4,const Color &color_in)
-	:Shape(color_in), mx1(x1), my1(y1), mx2(x2), my2(y2), mx3(x3), my3(y3), mx4(x4), my4(y4)
+Bezier::Bezier(double x1, double y1, double x2, double y2, double x3, double y3/*, double x4, double y4*/,const Color &color_in)
+	:Shape(color_in), mx1(x1), my1(y1), mx2(x2), my2(y2), mx3(x3), my3(y3)//, mx4(x4), my4(y4)
 {
 	mPoints.push_back(Point(mx1, my1, color));
 	mPoints.push_back(Point(mx2, my2, color));
 	mPoints.push_back(Point(mx3, my3, color));
-	mPoints.push_back(Point(mx4, my4, color));
+	//mPoints.push_back(Point(mx4, my4, color));
 	mPrevX = 0;
 	mPrevY = 0;
 }
@@ -37,8 +37,10 @@ int Bezier::Clicked(const double x, const double y) const {
 }
 
 Point Bezier::Evaluate(double t) const {
-	double pX = mPoints[0].x*(1 - t)*(1 - t)*(1 - t) + 3 * mPoints[1].x*(1 - t)*(1 - t)*t + 3 * mPoints[2].x*(1 - t)*t*t + mPoints[3].x*t*t*t;
-	double pY = mPoints[0].y*(1 - t)*(1 - t)*(1 - t) + 3 * mPoints[1].y*(1 - t)*(1 - t)*t + 3 * mPoints[2].y*(1 - t)*t*t + mPoints[3].y*t*t*t;
+	//double pX = mPoints[0].x*(1 - t)*(1 - t)*(1 - t) + 3 * mPoints[1].x*(1 - t)*(1 - t)*t + 3 * mPoints[2].x*(1 - t)*t*t + mPoints[3].x*t*t*t;
+	//double pY = mPoints[0].y*(1 - t)*(1 - t)*(1 - t) + 3 * mPoints[1].y*(1 - t)*(1 - t)*t + 3 * mPoints[2].y*(1 - t)*t*t + mPoints[3].y*t*t*t;
+	double pX = mPoints[0].x*(1 - t)*(1 - t) + 2 * mPoints[1].x*(1 - t)*t + mPoints[2].x*t*t;
+	double pY = mPoints[0].y*(1 - t)*(1 - t) + 2 * mPoints[1].y*(1 - t)*t + mPoints[2].y*t*t;
 	Point point = Point(pX, pY, color);
 	return point;
 }
@@ -94,15 +96,15 @@ void Bezier::SetX(double x, int p) {
 }
 void Bezier::Save(std::ostream &os) const
 {
-	os << "bezier " << mPoints[0].x << " " << mPoints[0].y << " " << mPoints[1].x << " " << mPoints[1].y << " " << mPoints[2].x << " " << mPoints[2].y << " " << mPoints[3].x << " " << mPoints[3].y << " " << color.r << " " << color.g << " " << color.b << std::endl;
+	os << "bezier " << mPoints[0].x << " " << mPoints[0].y << " " << mPoints[1].x << " " << mPoints[1].y << " " << mPoints[2].x << " " << mPoints[2].y << " " /*<< mPoints[3].x << " " << mPoints[3].y << " " << color.r << " "*/ << color.g << " " << color.b << std::endl;
 }
 void Bezier::Load(std::istream &is)
 {
-	is >> mx1 >> my1 >> mx2 >> my2 >> mx3 >> my3 >> mx4 >> my4 >> color.r >> color.g >> color.b;
+	is >> mx1 >> my1 >> mx2 >> my2 >> mx3 >> my3/* >> mx4 >> my4*/ >> color.r >> color.g >> color.b;
 	mPoints.push_back(Point(mx1, my1, color));
 	mPoints.push_back(Point(mx2, my2, color));
 	mPoints.push_back(Point(mx3, my3, color));
-	mPoints.push_back(Point(mx4, my4, color));
+	//mPoints.push_back(Point(mx4, my4, color));
 	mPrevX = 0;
 	mPrevY = 0;
 }

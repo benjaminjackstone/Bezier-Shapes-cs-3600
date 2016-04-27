@@ -318,8 +318,8 @@ void mouse(int mouse_button, int state, int x, int y)
 				color = new Color(g_red, g_green, g_blue);
 				p = new Point(xdisplay, ydisplay, *color);
 				g_points.push_back(p);
-				if (g_points.size() == 4) {
-					bez = new Bezier(g_points[0]->x, g_points[0]->y, g_points[1]->x, g_points[1]->y, g_points[2]->x, g_points[2]->y, g_points[3]->x, g_points[3]->y, *color);
+				if (g_points.size() == 3) {
+					bez = new Bezier(g_points[0]->x, g_points[0]->y, g_points[1]->x, g_points[1]->y, g_points[2]->x, g_points[2]->y,/* g_points[3]->x, g_points[3]->y,*/ *color);
 					g_shapes.push_back(bez);
 					g_points.clear();
 					delete color;
